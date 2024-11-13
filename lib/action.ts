@@ -1,4 +1,5 @@
 "use server"
+import { error } from "console"
 import { z } from "zod"
 
 const UploadSchema = z.object({
@@ -10,5 +11,13 @@ const UploadSchema = z.object({
 })
 
 export const uploadImage = async (formData: FormData) => {
-console.log(formData)
-}
+  const validatedFields = UploadSchema.safeParse(
+    Object.fromEntries(formData.entries())
+  )
+  if ( !validatedFields.success )
+  {
+    return {
+      error: validatedFields.error.flatten().fieldErrors
+    }
+  }
+ }
