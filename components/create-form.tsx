@@ -27,7 +27,6 @@ const CreateForm = () =>
         </div>
       </div>
       <div className="mb-4 pt-4">
-        <button className='bg-blue-700 text-white w-full font-medium py-2.5 px-6 text-base rounded-sm hover:bg-blue-600' type='submit'>upload</button>
       </div>
     </form>
   )
