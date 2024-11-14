@@ -1,6 +1,7 @@
 "use server"
-import { error } from "console"
 import { z } from "zod"
+import {put} from "@vercel/blob"
+import {prisma} from "@/lib/prisma"
 
 const UploadSchema = z.object({
   title: z.string().min(1),
@@ -20,4 +21,7 @@ export const uploadImage = async (prevState: unknown, formData: FormData) => {
       error: validatedFields.error.flatten().fieldErrors
     }
   }
- }
+
+  
+}
+ 
