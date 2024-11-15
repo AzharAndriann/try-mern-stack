@@ -2,6 +2,7 @@
 import React from 'react'
 import { uploadImage } from '@/lib/action'
 import { useFormState } from 'react-dom'
+import { SubmitButton } from '@/components/button'
 
 const CreateForm = () =>
 {
@@ -27,6 +28,7 @@ const CreateForm = () =>
         </div>
       </div>
       <div className="mb-4 pt-4">
+        <SubmitButton label="upload" />
       </div>
     </form>
   )
