@@ -1,4 +1,4 @@
-"use-client"
+"use client"
 import clsx from "clsx"
 import Link from "next/link"
 import { useFormState, useFormStatus } from "react-dom"
@@ -21,16 +21,17 @@ export const SubmitButton = ( { label }: { label: string } ) =>
   )
 }
 
-export const EditButton = () =>
+export const EditButton = ( { id }: { id: string } ) =>
 {
   return (
-    <Link href={ } className="py-3 text-sm bg-gray-50 rounded-bl-md hover:bg-gray-100 text-center">Edit</Link>
+    <Link href={ `edit/${ id }` } className="py-3 text-sm bg-gray-50 rounded-bl-md hover:bg-gray-100 text-center">Edit</Link>
   )
 }
 
-export const DeleteButton = () =>
+export const DeleteButton = ( { id }: { id: string } ) =>
 {
   return (
-    <Link href={ } className="py-3 text-sm bg-gray-50 rounded-bl-md hover:bg-gray-100 text-center">Edit</Link>
-  )
+    <form action="" className="py-3 text-sm bg-gray-50 rounded-bl-md hover:bg-gray-100 text-center">
+      <button type="submit">Delete</button>
+    </form> )
 }
