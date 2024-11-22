@@ -24,14 +24,16 @@ export const SubmitButton = ( { label }: { label: string } ) =>
 export const EditButton = ( { id }: { id: string } ) =>
 {
   return (
-    <Link href={ `edit/${ id }` } className="py-3 text-sm bg-gray-50 rounded-bl-md hover:bg-gray-100 text-center">Edit</Link>
+    <Link href={ `edit/${ id }` } className="py-3 text-sm bg-gray-50 w-full rounded-bl-md hover:bg-gray-100 text-center">Edit</Link>
   )
 }
 
-export const DeleteButton = ( { id }: { id: string } ) =>
-{
-  return (
-    <form action="" className="py-3 text-sm bg-gray-50 rounded-bl-md hover:bg-gray-100 text-center">
-      <button type="submit">Delete</button>
-    </form> )
-}
+// export const DeleteButton = ( { id }: { id: string } ) =>
+// {
+//   const deleteImageWithId = deleteImage.bind(null, id)
+//   return (
+//     <form action={deleteImageWithId} className="py-3 text-sm bg-gray-50 w-full rounded-br-md hover:bg-gray-100 text-center">
+//       <button type="submit">Delete</button>
+//     </form>
+//   )
+// }
