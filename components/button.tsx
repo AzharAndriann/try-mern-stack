@@ -1,4 +1,5 @@
 "use client"
+import { deleteImage } from "@/lib/action"
 import clsx from "clsx"
 import Link from "next/link"
 import { useFormState, useFormStatus } from "react-dom"
@@ -28,12 +29,22 @@ export const EditButton = ( { id }: { id: string } ) =>
   )
 }
 
-// export const DeleteButton = ( { id }: { id: string } ) =>
-// {
-//   const deleteImageWithId = deleteImage.bind(null, id)
-//   return (
-//     <form action={deleteImageWithId} className="py-3 text-sm bg-gray-50 w-full rounded-br-md hover:bg-gray-100 text-center">
-//       <button type="submit">Delete</button>
-//     </form>
-//   )
-// }
+export const DeleteButton = ( { id }: { id: string } ) =>
+{
+  const deleteImageWithId = deleteImage.bind( null, id )
+  return (
+    <form action={ deleteImageWithId } className="py-3 text-sm bg-gray-50 w-full rounded-br-md hover:bg-gray-100 text-center">
+      <DeleteBtn />
+    </form>
+  )
+}
+
+const DeleteBtn = () =>
+{
+  const { pending } = useFormStatus()
+  return (
+    <button type="submit" disabled={ pending } >
+      { pending ? "Deleting..." : "Delete" }
+    </button>
+  )
+}

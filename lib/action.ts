@@ -1,9 +1,10 @@
 "use server"
 import { z } from "zod"
-import {put} from "@vercel/blob"
+import {del, put} from "@vercel/blob"
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
+import { getImageById } from "@/lib/data"
   
 const UploadSchema = z.object({
   title: z.string().min(1),
@@ -43,4 +44,24 @@ export const uploadImage = async (prevState: unknown, formData: FormData) => {
   revalidatePath( "/" )
   redirect("/")
 }
+
+export const deleteImage = async (id: string): Promise<void> => {
+  const data = await getImageById(id);
+  if (!data) {
+    throw new Error("No data found");
+  }
+
+  await del(data.image);
+  try {
+    await prisma.upload.delete({
+      where: { id },
+    });
+  } catch (error) {
+    console.error("Failed to delete data:", error);
+    throw new Error("Failed to delete data");
+  }
+
+  revalidatePath("/");
+};
+
  
