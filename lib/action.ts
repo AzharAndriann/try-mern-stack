@@ -93,21 +93,24 @@ export const updateImage = async (id:string,prevState: unknown, formData: FormDa
     imagePath = data.image
   } else
   {
-    
+    await del( data.image )
+    const { url } = await put( image.name, image, {
+      access: "public",
+      multipart: true
+    } )
+    imagePath = url
   }
-  const { url } = await put( image.name, image, {
-    access: "public",
-    multipart: true
-  } )
+
   try {
-    await prisma.upload.create( {
+    await prisma.upload.update( {
       data: {
         title,
-        image:url
-      }
+        image:imagePath
+      },
+      where:{id}
     })
   } catch (error) {
-    return {message: "Failed to create data"}
+    return {message: "Failed to update data"}
   }
 
   revalidatePath( "/" )
