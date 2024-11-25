@@ -25,7 +25,7 @@ export const SubmitButton = ( { label }: { label: string } ) =>
 export const EditButton = ( { id }: { id: string } ) =>
 {
   return (
-    <Link href={ `edit/${ id }` } className="py-3 text-sm bg-gray-50 w-full rounded-bl-md hover:bg-gray-100 text-center">Edit</Link>
+    <Link href={ `edit/${ id }` } className="py-3 ms-10 text-sm bg-blue-500 w-full rounded-md hover:bg-gray-100 text-center text-white">Edit</Link>
   )
 }
 
@@ -43,7 +43,7 @@ const DeleteBtn = () =>
 {
   const { pending } = useFormStatus()
   return (
-    <button type="submit" disabled={ pending } >
+    <button type="submit" disabled={ pending } className="bg-red-500 text-white p-3 rounded-md" >
       { pending ? "Deleting..." : "Delete" }
     </button>
   )
