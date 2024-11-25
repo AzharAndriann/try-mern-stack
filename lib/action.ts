@@ -72,7 +72,7 @@ export const deleteImage = async (id: string): Promise<void> => {
 };
 
 export const updateImage = async (id:string,prevState: unknown, formData: FormData) => {
-  const validatedFields = UploadSchema.safeParse(
+  const validatedFields = EditSchema.safeParse(
     Object.fromEntries(formData.entries())
   )
   if ( !validatedFields.success )
@@ -82,7 +82,19 @@ export const updateImage = async (id:string,prevState: unknown, formData: FormDa
     }
   }
 
+  const data = await getImageById(id)
+
+  if(!data) return {message:"No data found"}
+
   const { title, image } = validatedFields.data 
+  let imagePath
+  if ( !image || image.size <= 0 )
+  {
+    imagePath = data.image
+  } else
+  {
+    
+  }
   const { url } = await put( image.name, image, {
     access: "public",
     multipart: true
