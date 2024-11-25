@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import { uploadImage } from '@/lib/action'
+import { updateImage } from '@/lib/action'
 import { useFormState } from 'react-dom'
 import { SubmitButton } from '@/components/button'
 import { Upload } from '@prisma/client'
@@ -8,12 +8,12 @@ import { Upload } from '@prisma/client'
 const EditForm = ( { data }: { data: Upload } ) =>
 {
 
-  const [ state, formAction ] = useFormState( uploadImage, null )
+  const [ state, formAction ] = useFormState( updateImage.bind( null, data.id ), null )
 
   return (
     <form action={ formAction }>
       <div className="mb-4 pt-2">
-        <input className='py-2 px-4 rounded-sm border border-gray-400 w-full' type="text" name='title' placeholder='Title' defaultValue={data.title} />
+        <input className='py-2 px-4 rounded-sm border border-gray-400 w-full' type="text" name='title' placeholder='Title' defaultValue={ data.title } />
         <div aria-live='polite' aria-atomic='true'>
           <p className='text-sm text-red-500 mt-2'>
             { state?.error?.title }

@@ -12,6 +12,13 @@ const UploadSchema = z.object({
   .refine((file) => file.size > 0, { message: "Image is required" })
   .refine((file) => file.size === 0 || file.type.startsWith("image/"), { message: "Only images are allowed" })
   .refine((file) => file.size < 4000000, { message: "Image must less than 4mb"})
+} )
+
+const EditSchema = z.object({
+  title: z.string().min(1),
+  image: z.instanceof(File)
+  .refine((file) => file.size === 0 || file.type.startsWith("image/"), { message: "Only images are allowed" })
+  .refine((file) => file.size < 4000000, { message: "Image must less than 4mb"}).optional()
 })
 
 export const uploadImage = async (prevState: unknown, formData: FormData) => {
@@ -63,5 +70,36 @@ export const deleteImage = async (id: string): Promise<void> => {
 
   revalidatePath("/");
 };
+
+export const updateImage = async (id:string,prevState: unknown, formData: FormData) => {
+  const validatedFields = UploadSchema.safeParse(
+    Object.fromEntries(formData.entries())
+  )
+  if ( !validatedFields.success )
+  {
+    return {
+      error: validatedFields.error.flatten().fieldErrors
+    }
+  }
+
+  const { title, image } = validatedFields.data 
+  const { url } = await put( image.name, image, {
+    access: "public",
+    multipart: true
+  } )
+  try {
+    await prisma.upload.create( {
+      data: {
+        title,
+        image:url
+      }
+    })
+  } catch (error) {
+    return {message: "Failed to create data"}
+  }
+
+  revalidatePath( "/" )
+  redirect("/")
+}
 
  
